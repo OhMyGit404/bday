@@ -14,11 +14,11 @@
       text-align: center;
       margin: 0;
       padding: 0;
-      overflow: hidden;
+      overflow: auto; 
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh; 
       position: relative;
       animation: vhs-glitch 0.5s infinite alternate;
     }
@@ -32,6 +32,9 @@
       cursor: pointer;
       transition: all 0.5s ease;
       position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); 
     }
 
     .box {
@@ -66,10 +69,8 @@
       width: 80%;
       max-width: 500px;
       text-align: left;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: relative; 
+      margin: 100px auto 20px; 
       opacity: 0;
       transition: opacity 1.5s ease-in-out;
       color: #00ffcc;
@@ -105,18 +106,18 @@
       border-right: 3px solid #ffcc00;
     }
 
-    .pixel {
+    .confetti {
       position: absolute;
-      width: 5px;
-      height: 5px;
-      background: #00ffcc;
-      opacity: 0.8;
-      animation: floatUp 5s infinite ease-in-out;
+      width: 10px;
+      height: 10px;
+      background: #ffcc00;
+      border-radius: 50%;
+      animation: confetti-fall 2s ease-out;
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-200px) scale(0.8); opacity: 0; }
+    @keyframes confetti-fall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
   </style>
 </head>
@@ -144,24 +145,22 @@
     const audio = document.getElementById('background-music');
     const typedMessage = document.getElementById('typedMessage');
     
-    const text = `Dear Yvonne,\n\nI know your birthday was on the 9th, but I took some time to think of the perfect way to celebrate you. \nYou deserve nothing but the best, and I hope this little gift brings a smile to your face.\nYou have a heart full of kindness, a spirit that shines brightly, and a determination that inspires everyone around you.\nLife may have its challenges, but I know you have the strength to overcome them.\n\nKeep fighting for your dreams, keep smiling, and never forget how loved you are.\n\nWith love,\nMaverick`;
+    const text = `Dear Yvonne,\n\nI know your birthday was on the 9th, but I took some time to think of the perfect way to celebrate you. \nYou deserve nothing but the best, and I hope this little gift brings a smile to your face.\nYou have a heart full of kindness, a spirit that shines brightly, and a determination that inspires everyone around you.\nLife may have its challenges, but I know you have the strength to overcome them.\n\nKeep fighting for your dreams, keep smiling, and never forget how loved you are.\n\nWith love,\nMaverick.`;
 
-    // Open the box on click
     function openGift() {
       lid.style.transform = "translateY(-50px) rotate(-10deg)";
       setTimeout(() => {
-        boxContainer.style.display = "none"; // Hide the box
+        boxContainer.style.display = "none"; 
         letter.style.display = "block";
         setTimeout(() => {
           letter.style.opacity = "1";
           typeMessage();
           audio.play();
-          createFloatingPixels();
+          createConfetti();
         }, 200);
       }, 500);
     }
 
-    // Type the message letter by letter
     function typeMessage() {
       let i = 0;
       function type() {
@@ -174,15 +173,7 @@
       type();
     }
 
-    // Create floating pixels
-    function createFloatingPixels() {
-      for (let i = 0; i < 20; i++) {
-        const pixel = document.createElement('div');
-        pixel.className = 'pixel';
-        pixel.style.left = Math.random() * 100 + 'vw';
-        document.body.appendChild(pixel);
-      }
-    }
+
   </script>
 </body>
 </html>
