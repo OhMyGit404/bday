@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Yvonne!</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: radial-gradient(circle, #3b0087, #1a002e);
+      color: #ffcc00;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      position: relative;
+      animation: vhs-glitch 0.5s infinite alternate;
+    }
+
+    @keyframes vhs-glitch {
+      0% { filter: hue-rotate(0deg) blur(1px); }
+      100% { filter: hue-rotate(10deg) blur(2px); }
+    }
+
+    .box-container {
+      cursor: pointer;
+      transition: all 0.5s ease;
+      position: absolute;
+    }
+
+    .box {
+      width: 150px;
+      height: 150px;
+      background: #ff00ff;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(255, 0, 255, 0.6);
+      position: relative;
+    }
+
+    .lid {
+      width: 160px;
+      height: 40px;
+      background: #ff0099;
+      position: absolute;
+      top: -20px;
+      left: -5px;
+      border-radius: 10px 10px 0 0;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .letter {
+      display: none;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 10px 30px rgba(255, 0, 255, 0.6);
+      width: 80%;
+      max-width: 500px;
+      text-align: left;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+      color: #00ffcc;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #ffcc00;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(255, 0, 255, 0.6);
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 10px 0;
+      white-space: pre-line;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .message p {
+      overflow: hidden;
+      white-space: nowrap;
+      animation: typing 4s steps(40, end) forwards;
+      border-right: 3px solid #ffcc00;
+    }
+
+    .pixel {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #00ffcc;
+      opacity: 0.8;
+      animation: floatUp 5s infinite ease-in-out;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-200px) scale(0.8); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="box-container" id="boxContainer">
+    <div class="box" onclick="openGift()">
+      <div class="lid" id="lid"></div>
+      <h2 style="color:#00ffcc;">Open Me!</h2>
+    </div>
+  </div>
+
+  <div class="letter" id="letter">
+    <h1>Happy Birthday Yvonne!</h1>
+    <p id="typedMessage"></p>
+  </div>
+
+  <audio id="background-music" loop>
+    <source src="nitangoja.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const boxContainer = document.getElementById('boxContainer');
+    const lid = document.getElementById('lid');
+    const letter = document.getElementById('letter');
+    const audio = document.getElementById('background-music');
+    const typedMessage = document.getElementById('typedMessage');
+    
+    const text = `Dear Yvonne,\n\nI know your birthday was on the 9th, but I took some time to think of the perfect way to celebrate you. \nYou deserve nothing but the best, and I hope this little gift brings a smile to your face.\nYou have a heart full of kindness, a spirit that shines brightly, and a determination that inspires everyone around you.\nLife may have its challenges, but I know you have the strength to overcome them.\n\nKeep fighting for your dreams, keep smiling, and never forget how loved you are.\n\nWith love,\nMaverick`;
+
+    // Open the box on click
+    function openGift() {
+      lid.style.transform = "translateY(-50px) rotate(-10deg)";
+      setTimeout(() => {
+        boxContainer.style.display = "none"; // Hide the box
+        letter.style.display = "block";
+        setTimeout(() => {
+          letter.style.opacity = "1";
+          typeMessage();
+          audio.play();
+          createFloatingPixels();
+        }, 200);
+      }, 500);
+    }
+
+    // Type the message letter by letter
+    function typeMessage() {
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          typedMessage.innerHTML += text[i];
+          i++;
+          setTimeout(type, 50);
+        }
+      }
+      type();
+    }
+
+    // Create floating pixels
+    function createFloatingPixels() {
+      for (let i = 0; i < 20; i++) {
+        const pixel = document.createElement('div');
+        pixel.className = 'pixel';
+        pixel.style.left = Math.random() * 100 + 'vw';
+        document.body.appendChild(pixel);
+      }
+    }
+  </script>
+</body>
+</html>
